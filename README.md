@@ -2,7 +2,7 @@
 Run Gitpod workspace with Oracle Database Free 23ai (23.4.0.0.0)
 
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/lucasjellema/gitpod-oracle-database)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/lucasjellema/gitpod-oracle-database-23ai-free-)
 
 
 Oracle Database Free 23ai is running in a container called *oracle-database-free*.
