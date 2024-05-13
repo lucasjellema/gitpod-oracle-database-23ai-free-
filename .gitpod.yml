@@ -7,7 +7,7 @@ tasks:
       gp open README.md
       alias sql="/workspace/gitpod-oracle-database/sqlcl/bin/sql"
       wget https://download.oracle.com/otn_software/java/sqldeveloper/sqlcl-latest.zip && unzip -q sqlcl-latest.zip && 
-      echo "done with download and unzip SQLcl and now sleep for 400 seconds until db is running" 
+      echo "done with download and unzip SQLcl and now sleep for 300 seconds until db is running" 
       sleep 300s &&       
       gp sync-done database-running &&
       touch db-running &&
