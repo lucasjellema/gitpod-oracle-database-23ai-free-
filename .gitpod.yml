@@ -1,14 +1,8 @@
 tasks:
-  - init: |
-      sudo apt-get update
-      sudo apt-get install -y podman
-      echo "$(whoami):100000:65536" | sudo tee -a /etc/subuid
-      echo "$(whoami):100000:65536" | sudo tee -a /etc/subgid
-    command: echo "Podman is ready to use!"
   - name: pull and run container
-  - init: |
-      podman pull container-registry.oracle.com/database/free:latest 
-      podman run -d --name oracle-database-free -e ORACLE_PWD=TheSuperSecret1509! container-registry.oracle.com/database/free:latest
+    init: |
+      docker pull container-registry.oracle.com/database/free:latest &&
+      docker run -d --name oracle-database-free -e ORACLE_PWD=TheSuperSecret1509! -v /workspace/gitpod-oracle-database-23ai-free-/oradata:/opt/oracle/oradata:Z container-registry.oracle.com/database/free:latest
        #      docker run -d -p 1521:1521 --name oracle-database-free -e ORACLE_PWD=TheSuperSecret1509! -e APP_USER=APP -e APP_USER_PASSWORD=APPPW gvenzl/oracle-xe &&
       # open the readme.md document in VS code; note: thanks to the configuration in .vscode/settings.json, the document opens in markdown preview mode
       gp open README.md
@@ -18,22 +12,22 @@ tasks:
       #sleep 20s &&       
       #gp sync-done database-running &&
       #touch db-running &&
-      #/workspace/gitpod-oracle-database/sqlcl/bin/sql sys/"TheSuperSecret1509!"@localhost:1521/FREE as sysdba @".prepare/create-user-dev"
+      #/workspace/gitpod-oracle-database-23ai-free-/sqlcl/bin/sql sys/"TheSuperSecret1509!"@localhost:1521/FREE as sysdba @".prepare/create-user-dev"
   - name: start container and run SQL*Plus session as user APP
     init: gp sync-await database-running
     command: |
-      # podman start oracle-database-free  &&
+      # docker start oracle-database-free  &&
       # docker ps &&  
       # sleep 3s && 
-      # echo "Oracle Database Free 23ai is running. The database is accessible at localhost, port 1521; database SID = XE and has an additional user APP/APPPW in PDB XEPDB1 " && 
+      # echo "Oracle Database Free 23ai is running. The database is accessible at localhost, port 1521; database SID = FREE and has an additional user APP/APPPW in PDB XEPDB1 " && 
       # gp sync-done database-started &&
-      # podman exec -it oracle-database-free sqlplus sys/TheSuperSecret1509!@FREE as sysdba
+      # docker exec -it oracle-database-free sqlplus sys/TheSuperSecret1509!@FREE as sysdba
   # - name: Open SQLcl for user APP
   #   init: |
   #     gp sync-await database-running
   #   command: |
   #     gp sync-await database-started &&
-  #     /workspace/gitpod-oracle-database/sqlcl/bin/sql APP/APPPW@localhost:1521/xepdb1 
+  #     /workspace/gitpod-oracle-database-23ai-free-/sqlcl/bin/sql APP/APPPW@localhost:1521/xepdb1 
 
 ports:
 
