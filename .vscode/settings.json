@@ -1,0 +1,55 @@
+{
+    "workbench.editorAssociations": 
+        {
+            "README.md": "vscode.markdown.preview.editor",
+        },
+    "workbench.startupEditor": "none",
+    "oracledevtools.connections": [
+        {
+            "authenticationType": 1,
+            "dBAPrivilege": "SYSDBA",
+            "userID": "SYS",
+            "passwordSaved": true,
+            "password": "TheSuperSecret1509!",
+            "dataSource": "localhost:1521/FREE",
+            "connectionType": 2,
+            "databaseHostName": "localhost",
+            "databasePortNumber": "1521",
+            "databaseServiceName": "FREE",
+            "name": "SYS.FREE",
+            "currentSchema": "",
+            "tnsAdmin": "/home/gitpod/Oracle/network/admin"
+        },
+        {
+            "authenticationType": 2,
+            "dBAPrivilege": "None",
+            "userID": "DEV",
+            "passwordSaved": true,
+            "password": "DEV_PW",
+            "dataSource": "localhost:1521/FREEPDB1",
+            "connectionType": 2,
+            "databaseHostName": "localhost",
+            "databasePortNumber": "1521",
+            "databaseServiceName": "FREEPDB1",
+            "name": "DEV.FREEPDB1",
+            "currentSchema": "",
+            "tnsAdmin": "/home/gitpod/Oracle/network/admin"
+        },
+        {
+            "authenticationType": 2,
+            "dBAPrivilege": "None",
+            "userID": "APP",
+            "passwordSaved": true,
+            "password": "APPPW",
+            "dataSource": "localhost:1521/FREEPDB1",
+            "connectionType": 2,
+            "databaseHostName": "localhost",
+            "databasePortNumber": "1521",
+            "databaseServiceName": "FREEPDB1",
+            "name": "APP.FREEPDB1",
+            "currentSchema": "",
+            "tnsAdmin": "/home/gitpod/Oracle/network/admin"
+        }
+    ]
+
+}
