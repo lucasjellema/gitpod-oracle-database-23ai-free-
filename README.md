@@ -5,19 +5,20 @@ Run Gitpod workspace with Oracle Database Free 23ai (23.4.0.0.0)
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/lucasjellema/gitpod-oracle-database-23ai-free-)
 
 
-Oracle Database Free 23ai is running in a container called *oracle-database-free*.
+After approximately 5-8 minutes Oracle Database Free 23ai is running in a container called *oracle-database-free*. (the download followed by starting up the database takes a while)
+
 You can access the database at port 1521 on localhost - using user SYS (as SYSDBA) and password TheSuperSecret1509! or user developer with password devPassword!
 
 You can connect to the Oracle Database server by running a SQL*Plus command from within the container - using
 
 ```
-podman exec -it oracle-database-free sqlplus sys/TheSuperSecret1509!@FREE as sysdba
+docker exec -it oracle-database-free sqlplus sys/"TheSuperSecret1509!" as sysdba
 ```
 
 or connect as the admin of Pluggable Database FREEPDB1:
 
 ```
-podman exec -it oracle-database-free sqlplus pdbadmin/TheSuperSecret1509!@@FREEPDB1
+docker exec -it oracle-database-free sqlplus pdbadmin/"TheSuperSecret1509!"@FREEPDB1
 ```
 
 
@@ -41,13 +42,22 @@ sql DEV/DEV_PW@localhost:1521/FREEPDB1
 
 
 ## Reusing the Existing Database
-If the database is started using a host system directory mounted at an /opt/oracle/oradata location inside the container, as explained in the Custom Configuration section under "Mounting Podman volume/host directory for database persistence", then the data files remain persistent even after the container is destroyed. Another container with the same data files can be started by reusing the host system directory.
+If the database is started using a host system directory mounted at an /opt/oracle/oradata location inside the container, as explained in the Custom Configuration section under "Mounting docker volume/host directory for database persistence", then the data files remain persistent even after the container is destroyed. Another container with the same data files can be started by reusing the host system directory. Startup will then be quite fast!
 
 To reuse this directory on the host system for the data volume, run the following commands:
 
 ```
-  podman run -d --name oracle-database-free -v <writable_host_directory_path>:/opt/oracle/oradata container-registry.oracle.com/database/free:latest
+docker run -d --name oracle-database-free -v <writable_host_directory_path>:/opt/oracle/oradata container-registry.oracle.com/database/free:latest
 ```
+
+f a host system directory is mounted on the /opt/oracle/oradata location, two things can happen :
+
+If the datafiles are present in the host system directory which is being mounted, then these files will overwrite the files present at /opt/oracle/oradata (in the container) and the database startup will be very fast.
+
+If host system directory doesn't contain the datafiles then a new database setup will begin. It takes a significant amount of time (approximately 10 minutes) to set up a fresh database. 
+
+Note:* Cleaning up a mounted host directory can be done by changing into the directory location and executing rm -rf * .*
+
 
 ## Running Scripts After Setup and On Startup
 The Container images can be configured to run scripts after setup and on startup. Currently, .sh and .sql extensions are supported. For post-setup scripts, mount the volume /opt/oracle/scripts/setup to include scripts in this directory. For post-startup scripts, mount the volume /opt/oracle/scripts/startup to include scripts in this directory.
@@ -58,6 +68,6 @@ Note: The startup scripts are run after the first time that the database setup i
 
 The following example mounts the local directory /home/oracle/myScripts to /opt/oracle/scripts/startup, which is then searched for custom startup scripts:
 
-  $ podman run -d --name <oracle-db> -v
+  $ docker run -d --name <oracle-db> -v
   /home/oracle/myScripts:/opt/oracle/scripts/startup
   container-registry.oracle.com/database/free:latest
